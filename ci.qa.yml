@@ -8,7 +8,7 @@ prepare:
         rm go1.24.4.linux-amd64.tar.gz && ln -s
         /home/user/app/.codesphere-internal/go/bin/go /home/user/bin/go)
     - name: install dependencies
-      command: go mod tidy generate
+      command: go mod tidy
     - command: go build
 test:
   steps:
