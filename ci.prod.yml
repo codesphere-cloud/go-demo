@@ -3,7 +3,7 @@ prepare:
   steps:
     - name: get build binary
       command: wget -O go-demo
-        https://github.com/codesphere-cloud/go-demo/releases/download/v0.0.2/go-demo-linux-amd64
+        https://github.com/codesphere-cloud/go-demo/releases/download/v0.0.3/go-demo-linux-amd64
     - command: chmod +x go-demo
 test:
   steps: []
