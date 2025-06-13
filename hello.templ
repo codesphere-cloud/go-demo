@@ -1,0 +1,18 @@
+package main
+
+templ hello(name string, calculationResult int) {
+	<html>
+		<head>
+			<title>Hello { name }</title>
+		</head>
+		<body>
+			<h1>Hello, { name }!</h1>
+			<p>Dies ist eine einfache Demo mit Go, Echo und templ.</p>
+			
+			<p>
+				<b>Ein Rechenergebnis aus unserem Utils-Package:</b>
+				5 + 3 = { calculationResult }
+			</p>
+		</body>
+	</html>
+}

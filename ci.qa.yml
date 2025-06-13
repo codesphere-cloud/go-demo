@@ -1,0 +1,27 @@
+schemaVersion: v0.2
+prepare:
+  steps:
+    - name: install go
+      command: which go &> /dev/null || (rm -rf /usr/local/go && wget
+        https://go.dev/dl/go1.24.4.linux-amd64.tar.gz && tar -C
+        /home/user/app/.codesphere-internal -xzf go1.24.4.linux-amd64.tar.gz &&
+        rm go1.24.4.linux-amd64.tar.gz && ln -s
+        /home/user/app/.codesphere-internal/go/bin/go /home/user/bin/go)
+    - name: install dependencies
+      command: go mod tidy generate
+    - command: go build
+test:
+  steps:
+    - command: which go &> /dev/null || (ln -s
+        /home/user/app/.codesphere-internal/go/bin/go /home/user/bin/go)
+    - command: go test -v ./utils
+run:
+  go-service:
+    steps:
+      - command: ./hello
+    plan: 8
+    replicas: 1
+    isPublic: true
+    network:
+      path: /
+      stripPath: false
