@@ -10,9 +10,13 @@ prepare:
     - command: make tidy
 test:
   steps:
-    - command: which go &> /dev/null || (ln -s
+    - name: create symlink to persistent go installation
+      command: which go &> /dev/null || (ln -s
         /home/user/app/.codesphere-internal/go/bin/go /home/user/bin/go)
-    - command: go test -v ./utils
+    - name: testing go code base
+      command: go test -v ./utils
+    - name: "security check go "
+      command: make lint
 run:
   go-service:
     steps:

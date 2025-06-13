@@ -6,10 +6,7 @@ prepare:
         https://github.com/codesphere-cloud/go-demo/releases/download/v0.0.1/go-demo-linux-amd64
     - command: chmod +x go-demo
 test:
-  steps:
-    - command: which go &> /dev/null || (ln -s
-        /home/user/app/.codesphere-internal/go/bin/go /home/user/bin/go)
-    - command: go test -v ./utils
+  steps: []
 run:
   go-service:
     steps:

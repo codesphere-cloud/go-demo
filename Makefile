@@ -1,8 +1,9 @@
 BINARY_NAME=hello
 GO=go
 TEMPL=go run github.com/a-h/templ/cmd/templ@latest generate
+GOSEC=go run github.com/securego/gosec/v2/cmd/gosec@latest -exclude-dir=.codesphere-internal
 
-.PHONY: all build run clean test tidy generate release help
+.PHONY: all build run clean test tidy generate lint release help
 
 all: build
 
@@ -17,6 +18,10 @@ run:
 test:
 	@echo "Running tests..."
 	$(GO) test -v ./...
+
+lint:
+	@echo "Running security scanner..."
+	$(GOSEC) ./...
 
 tidy:
 	@echo "Tidying go.mod and go.sum files..."
@@ -45,9 +50,9 @@ help:
 	@echo "  make build      - Compile the project"
 	@echo "  make run        - Start the application"
 	@echo "  make test       - Run all tests"
+	@echo "  make lint       - Run security scanner (gosec)"
 	@echo "  make tidy       - Tidy go.mod and go.sum files"
 	@echo "  make generate   - Generate code from .templ files"
 	@echo "  make release    - Create and push a new release tag (e.g., make release VERSION=v1.0.0)"
 	@echo "  make clean      - Remove the compiled application"
 	@echo "  make help       - Show this help message"
-
