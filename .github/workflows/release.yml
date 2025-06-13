@@ -1,0 +1,32 @@
+name: Release Go Binaries
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22' 
+
+      - name: Build for multiple platforms
+        env:
+          APP_NAME: go-demo 
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o ./${{ env.APP_NAME }}-linux-amd64
+          GOOS=windows GOARCH=amd64 go build -o ./${{ env.APP_NAME }}-windows-amd64.exe
+          GOOS=darwin GOARCH=amd64 go build -o ./${{ env.APP_NAME }}-darwin-amd64
+
+      - name: Create Release and Upload Binaries
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            go-demo-*
