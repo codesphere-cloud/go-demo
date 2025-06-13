@@ -3,10 +3,10 @@ on:
   workflow_dispatch:
   pull_request:
     types:
-    - closed
-    - opened
-    - reopened
-    - synchronize
+      - closed
+      - opened
+      - reopened
+      - synchronize
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -14,8 +14,14 @@ jobs:
       GO111MODULE: on
     steps:
       - name: Checkout Source
-        uses: actions/checkout@v3
-      - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          args: ./...
+          go-version: '1.24.4'
+
+      - name: Run Gosec Security Scanner
+        run: |
+          go install github.com/securego/gosec/v2/cmd/gosec@latest
+          gosec -exclude-dir=.codesphere-internal ./...
